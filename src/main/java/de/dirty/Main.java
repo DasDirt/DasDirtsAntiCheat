@@ -1,5 +1,9 @@
 package de.dirty;
 
+import de.dirty.ddac.check.RotationCheck;
+import de.dirty.ddac.listener.JoinListener;
+import de.dirty.ddac.listener.QuitListener;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.logging.Logger;
@@ -13,7 +17,7 @@ public class Main extends JavaPlugin {
 
     private Logger logger = getLogger();
     private String PREFIX = "DDAC";
-    private String VERSION = "1.0";
+    private String VERSION = "1.1";
 
     @Override
     public void onEnable() {
@@ -21,6 +25,11 @@ public class Main extends JavaPlugin {
         logger.info(PREFIX + "{" + VERSION + "} now loading");
         logger.warning("This plugin is still in beta it could come to errors");
         logger.info("An anticheat is not a 100% guarantee to avoid hackers but it makes hacking difficult\n");
+        logger.info("Loading Listeners");
+        getServer().getPluginManager().registerEvents(new JoinListener(logger), this);
+        getServer().getPluginManager().registerEvents(new QuitListener(), this);
+        logger.info("loading Rotation check");
+        new RotationCheck();
         super.onEnable();
     }
 
